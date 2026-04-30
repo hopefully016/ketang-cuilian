@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>课堂淬炼 — 把每节课变成可用的资产</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0f0f0d;
+  --bg2:#161614;
+  --bg3:#1e1e1b;
+  --bg4:#252522;
+  --line:#2e2e2a;
+  --line2:#3a3a35;
+  --text:#f0ede8;
+  --text2:#9e9b94;
+  --text3:#5c5a55;
+  --gold:#c9a96e;
+  --gold-dim:#7a6340;
+  --tag-a-bg:#1a2235;
+  --tag-a:#6b9de8;
+  --tag-b-bg:#1a2b1e;
+  --tag-b:#6bc483;
+  --tag-c-bg:#2b2214;
+  --tag-c:#c4986b;
+  --r:10px;
+  --r2:16px;
+}
+
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-serif;font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh}
+
+.wrap{max-width:480px;margin:0 auto;padding:0 20px}
+
+/* NAV */
+nav{padding:20px 0;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+.brand{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:600;letter-spacing:.04em;color:var(--text)}
+.beta{font-size:10px;padding:3px 10px;border-radius:20px;border:1px solid var(--gold-dim);color:var(--gold);letter-spacing:.06em}
+
+/* HERO */
+.hero{padding:52px 0 44px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:11px;letter-spacing:.14em;color:var(--text3);text-transform:uppercase;margin-bottom:18px}
+.hero-title{font-family:'Noto Serif SC',serif;font-size:32px;font-weight:600;line-height:1.2;letter-spacing:-.01em;margin-bottom:18px;color:var(--text)}
+.hero-title em{font-style:normal;color:var(--gold)}
+.hero-sub{font-size:14px;color:var(--text2);line-height:1.85;max-width:380px}
+
+/* DIVIDER */
+.sec{padding:36px 0;border-bottom:1px solid var(--line)}
+.sec-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:22px}
+
+/* PAIN */
+.pain-list{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.pain-item{background:var(--bg2);padding:16px 18px;display:flex;align-items:baseline;gap:12px}
+.pain-dot{width:5px;height:5px;border-radius:50%;background:var(--gold-dim);flex-shrink:0;margin-top:8px}
+.pain-text{font-size:14px;color:var(--text2);line-height:1.6}
+
+/* ROLE TOGGLE */
+.role-wrap{display:flex;gap:6px;margin-bottom:22px}
+.role-btn{flex:1;padding:9px 0;font-size:13px;font-family:'Noto Sans SC',sans-serif;font-weight:300;border-radius:var(--r);border:1px solid var(--line2);cursor:pointer;background:transparent;color:var(--text2);transition:all .2s;text-align:center}
+.role-btn:hover{border-color:var(--gold-dim);color:var(--text)}
+.role-btn.on{background:var(--gold);border-color:var(--gold);color:#0f0f0d;font-weight:500}
+
+/* OUTPUT CARDS */
+.out-cards{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+.out-card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);padding:18px 18px 16px;transition:border-color .2s}
+.out-card:hover{border-color:var(--line2)}
+.tag{display:inline-block;font-size:10px;padding:3px 10px;border-radius:20px;margin-bottom:12px;letter-spacing:.02em}
+.ta{background:var(--tag-a-bg);color:var(--tag-a)}
+.tb{background:var(--tag-b-bg);color:var(--tag-b)}
+.tc{background:var(--tag-c-bg);color:var(--tag-c)}
+.out-card h3{font-size:13px;font-weight:500;margin-bottom:6px;color:var(--text)}
+.out-card p{font-size:12px;color:var(--text2);line-height:1.75;margin-bottom:12px}
+.files{display:flex;flex-wrap:wrap;gap:5px}
+.fpill{font-size:10px;color:var(--text3);background:var(--bg3);padding:3px 8px;border-radius:4px;font-family:monospace}
+
+/* TRAINER NOTE */
+.tnote{display:none;background:var(--bg3);border:1px solid var(--gold-dim);border-radius:var(--r);padding:14px 16px;margin-top:4px}
+.tnote.on{display:block}
+.tnote-title{font-size:12px;font-weight:500;color:var(--gold);margin-bottom:5px}
+.tnote p{font-size:12px;color:var(--text2);line-height:1.75}
+
+/* SAMPLE */
+.stabs{display:flex;gap:0;margin-bottom:14px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.stab{flex:1;padding:9px 0;font-size:12px;font-family:'Noto Sans SC',sans-serif;cursor:pointer;background:var(--bg2);color:var(--text2);border:none;border-right:1px solid var(--line);transition:all .15s;text-align:center}
+.stab:last-child{border-right:none}
+.stab.on{background:var(--bg4);color:var(--text)}
+.spanel{display:none}
+.spanel.on{display:block}
+.sbox{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);padding:20px}
+.sbox h4{font-size:13px;font-weight:500;color:var(--text);margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.blabel{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin:14px 0 7px}
+.blabel:first-of-type{margin-top:0}
+.sbox p{font-size:12px;color:var(--text2);line-height:1.8}
+.quote{border-left:2px solid var(--gold-dim);padding-left:12px;font-size:12px;color:var(--text2);font-style:italic;line-height:1.8;margin:8px 0}
+.intent{font-size:11px;color:var(--text3);line-height:1.7;background:var(--bg3);padding:9px 12px;border-radius:6px;margin-top:7px}
+.intent strong{color:var(--text2);font-weight:500}
+.lrow{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+.lpill{font-size:10px;background:var(--bg3);color:var(--text2);padding:4px 9px;border-radius:4px;font-family:monospace}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none;padding-bottom:0}
+.snum{width:26px;height:26px;border-radius:50%;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text3);flex-shrink:0;margin-top:2px}
+.stitle{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px}
+.sdesc{font-size:12px;color:var(--text2);line-height:1.75}
+
+/* CTA */
+.cta-sec{padding:36px 0 56px}
+.cta-box{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);padding:28px 24px;display:flex;align-items:center;gap:24px;justify-content:space-between}
+.cta-title{font-family:'Noto Serif SC',serif;font-size:18px;font-weight:600;color:var(--text);margin-bottom:8px}
+.cta-desc{font-size:12px;color:var(--text2);line-height:1.85}
+.qr{width:88px;height:88px;border:1px dashed var(--gold-dim);border-radius:var(--r);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qr span{font-size:10px;color:var(--text3);text-align:center;line-height:1.6}
+
+/* FOOTER */
+footer{padding:20px 0;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.fbrand{font-family:'Noto Serif SC',serif;font-size:13px;font-weight:600;color:var(--text)}
+.fnote{font-size:11px;color:var(--text3)}
+
+/* FADE */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.hero{animation:fadeUp .5s ease both}
+.sec:nth-child(2){animation:fadeUp .5s .05s ease both}
+.sec:nth-child(3){animation:fadeUp .5s .1s ease both}
+.sec:nth-child(4){animation:fadeUp .5s .15s ease both}
+.sec:nth-child(5){animation:fadeUp .5s .2s ease both}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav>
+  <div class="brand">课堂淬炼</div>
+  <div class="beta">内测中</div>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">课堂内容沉淀服务</div>
+  <h1 class="hero-title">把每节课<br><em>变成可用的资产</em></h1>
+  <p class="hero-sub">上传课堂录音或转文字稿，自动拆解为课程地图、模块拆解和可复用封装卡，直接导入 Obsidian 建立个人素材库。</p>
+</div>
+
+<div class="sec">
+  <div class="sec-label">你是否也有这些问题</div>
+  <div class="pain-list">
+    <div class="pain-item"><div class="pain-dot"></div><div class="pain-text">花钱上课，学完就忘，笔记从不再翻</div></div>
+    <div class="pain-item"><div class="pain-dot"></div><div class="pain-text">内容有了，但不知道怎么用在自己的课上</div></div>
+    <div class="pain-item"><div class="pain-dot"></div><div class="pain-text">想学老师的教法，却看不懂设计逻辑</div></div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-label">你会得到什么</div>
+  <div class="role-wrap">
+    <button class="role-btn on" onclick="switchRole('s')">学员</button>
+    <button class="role-btn" onclick="switchRole('t')">培训师</button>
+  </div>
+  <div class="out-cards">
+    <div class="out-card">
+      <span class="tag ta">课程地图</span>
+      <h3>这节课讲了什么</h3>
+      <p>叙事逻辑、模块总览、老师的节奏特征，一眼看懂课程全貌，随时可以回溯。</p>
+      <div class="files">
+        <div class="fpill">课程地图-魅力呈现第二天上午.md</div>
+      </div>
+    </div>
+    <div class="out-card">
+      <span class="tag tb">模块拆解</span>
+      <h3>每个知识点怎么讲的</h3>
+      <p>每个核心知识点单独一个文件，引入方式、案例功能、互动设计，逐一还原。</p>
+      <div class="files">
+        <div class="fpill">归类意识.md</div>
+        <div class="fpill">两大原则.md</div>
+        <div class="fpill">三种脉络.md</div>
+      </div>
+    </div>
+    <div class="out-card">
+      <span class="tag tc">封装卡</span>
+      <h3>可直接调用的素材</h3>
+      <p>每个知识点提炼为独立封装卡，跨课复用，备课时直接取用，不用从头想。</p>
+      <div class="files">
+        <div class="fpill">封装卡-归类意识.md</div>
+        <div class="fpill">封装卡-三种脉络.md</div>
+        <div class="fpill">封装卡-雨伞复习.md</div>
+      </div>
+    </div>
+  </div>
+  <div class="tnote" id="tnote">
+    <div class="tnote-title">培训师专属：教学设计意图分析</div>
+    <p>每个模块额外包含「为什么这么设计」——老师的关键设计决策分析，帮你看懂教学结构背后的逻辑，积累自己的教学手法库。</p>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-label">样品预览 · 魅力呈现第二天上午</div>
+  <div class="stabs">
+    <button class="stab on" onclick="switchS('map')">课程地图</button>
+    <button class="stab" onclick="switchS('mod')">模块拆解</button>
+    <button class="stab" onclick="switchS('card')">封装卡</button>
+  </div>
+
+  <div class="spanel on" id="sp-map">
+    <div class="sbox">
+      <h4>课程地图 · 魅力呈现第二天上午</h4>
+      <div class="blabel">整体叙事逻辑</div>
+      <p>这节课是一条能力成长线，不是平铺的知识点清单。老师在开课时就把框架透明化——学员全程知道自己在哪、要去哪。</p>
+      <div style="margin:12px 0;padding:14px;background:var(--bg3);border-radius:var(--r);font-size:12px;color:var(--text2);line-height:2">
+        热身激活（雨伞复习）→ 归类意识（60分）→ 两大原则（80分）→ 三种脉络（90分）→ 带练巩固 → 高阶收尾
+      </div>
+      <div class="blabel">设计决策</div>
+      <p><strong style="font-weight:500;color:var(--text)">决策：</strong>用60/80/90分量化能力阶梯</p>
+      <div class="intent"><strong>原因：</strong>让学员清楚知道自己在哪个台阶，把焦虑转化为方向感，每个模块都有明确的"到这里你能得几分"</div>
+      <div class="blabel">关联封装卡</div>
+      <div class="lrow">
+        <span class="lpill">[[封装卡-雨伞复习工具]]</span>
+        <span class="lpill">[[封装卡-归类意识]]</span>
+        <span class="lpill">[[封装卡-三种脉络]]</span>
+        <span class="lpill">[[封装卡-不重不漏MECE]]</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="spanel" id="sp-mod">
+    <div class="sbox">
+      <h4>归类意识（60分） · 模块拆解</h4>
+      <div class="blabel">【启】怎么引入的</div>
+      <p>先给总框架，再用提问而不是直接告诉：</p>
+      <div class="quote">「结构化其实就是三件事儿，一个意识，两大原则做保障，三种脉络做支撑，基本上就足够了。」</div>
+      <div class="intent"><strong>设计意图：</strong>让复训学员有参与感，让新学员产生好奇心，两类人都被照顾到。</div>
+      <div class="blabel">【承】核心案例</div>
+      <p>三岁女儿流水账报同学名字 vs 大人自然会分男女——用真实亲切的故事让结论从对比里自然生长出来，学员自己推导出"大人会分类，小孩不会"。</p>
+      <div class="quote">「当我能把世间万物先扒拉扒拉搓几堆的时候，我们认为它是有结构化的雏形的。」</div>
+      <div class="intent"><strong>案例功能：</strong>主角是自己的女儿，真实有画面感；结论从故事里生长，记忆更深。</div>
+    </div>
+  </div>
+
+  <div class="spanel" id="sp-card">
+    <div class="sbox">
+      <h4>封装卡 · 三种脉络——并肩传</h4>
+      <div class="blabel">核心表达</div>
+      <p>内容表达的三种基本结构：并列（谁先谁后无所谓）、渐进（有先后顺序）、传授（是什么→为什么→怎么做）。初阶用并列，高阶用渐进和传授。</p>
+      <div class="blabel">老师原话</div>
+      <div class="quote">「初阶用并列，高阶用渐进和传授；高手一般只会选渐进和传授，不太会用并列。」</div>
+      <div class="quote">「横向别乱，纵向可换……就这几个书位兄弟，甭管是你叫婶儿、叫姑、叫叔，他们是一辈儿的，你不能把侄子拉上来排同辈。」</div>
+      <div class="blabel">适用场景</div>
+      <p style="color:var(--text2);font-size:12px">所有需要讲「表达框架」的课程；素材库里最高频调用的知识单元；帮学员解决「不知道怎么组织语言」的核心工具。</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-label">如何使用</div>
+  <div class="steps">
+    <div class="step">
+      <div class="snum">1</div>
+      <div>
+        <div class="stitle">发给我你的录音或转文字稿</div>
+        <div class="sdesc">支持课堂录音（需先转文字，推荐飞书妙记）或任意文字记录</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="snum">2</div>
+      <div>
+        <div class="stitle">选择你的角色</div>
+        <div class="sdesc">学员版聚焦「我能带走什么」，培训师版额外包含教学设计意图分析</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="snum">3</div>
+      <div>
+        <div class="stitle">收到文件，导入 Obsidian</div>
+        <div class="sdesc">按课程地图 / 模块拆解 / 封装卡三个文件夹分类放入，双链自动生效</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cta-sec">
+  <div class="cta-box">
+    <div>
+      <div class="cta-title">想试试？</div>
+      <div class="cta-desc">内测阶段，先到先得<br>扫码加微信<br>发你的课堂录音，我来帮你拆</div>
+    </div>
+    <div class="qr"><span>微信<br>二维码</span></div>
+  </div>
+</div>
+
+<footer>
+  <div class="fbrand">课堂淬炼</div>
+  <div class="fnote">把听过的课，变成用得上的东西</div>
+</footer>
+
+</div>
+<script>
+function switchRole(r){
+  document.querySelectorAll('.role-btn').forEach((b,i)=>b.classList.toggle('on',['s','t'][i]===r));
+  document.getElementById('tnote').classList.toggle('on',r==='t');
+}
+function switchS(t){
+  const tabs=['map','mod','card'];
+  document.querySelectorAll('.stab').forEach((b,i)=>b.classList.toggle('on',tabs[i]===t));
+  document.querySelectorAll('.spanel').forEach((p,i)=>p.classList.toggle('on',tabs[i]===t));
+}
+</script>
+</body>
+</html>
